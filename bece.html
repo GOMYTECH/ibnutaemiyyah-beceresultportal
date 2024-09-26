@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        body {
+            background-color: black;
+            color: yellow;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+            color: yellow;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: yellow;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        input[type="submit"]:hover {
+            background-color: black;
+            color: yellow;
+            border: 2px solid yellow;
+        }
+
+        .links {
+            margin-top: 20px;
+        }
+
+        a {
+            color: yellow;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Registration Form</h1>
+        <h2>Fill the form first</h2>
+        <h2>Make payment after uploading on the page so as to get the pin on your email</h2>
+        <div class="form-container">
+            <form id="student-form">
+                <label for="student-name">Student Name:</label>
+                <input type="text" id="student-name" name="student-name" placeholder="Enter student's name" required>
+
+                <label for="exam-no">Exam Number:</label>
+                <input type="number" id="exam-no" name="exam-no" placeholder="Enter exam number" required>
+
+                <label for="sex">Sex:</label>
+                <select id="sex" name="sex" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="parent-number">Parent's Number:</label>
+                <input type="number" id="parent-number" name="parent-number" placeholder="Enter parent's phone number" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter parent's email" required>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+        <div class="links">
+            <a href="submitted-info.html">View Submitted Information</a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('student-form');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form values
+            const studentName = document.getElementById('student-name').value;
+            const examNo = document.getElementById('exam-no').value;
+            const sex = document.getElementById('sex').value;
+            const parentNumber = document.getElementById('parent-number').value;
+            const email = document.getElementById('email').value;
+
+            // Get the current time
+            const timestamp = new Date().toLocaleString();
+
+            // Store the information in local storage
+            let submissions = JSON.parse(localStorage.getItem('submissions')) || [];
+            submissions.push({ studentName, examNo, sex, parentNumber, email, timestamp });
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+
+            // Clear the form
+            form.reset();
+
+            // Redirect to pay.html
+            window.location.href = 'pay.html';
+        });
+    </script>
+</body>
+</html>
+

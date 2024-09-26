@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBNUTAAEMIYAH Payment</title>
+    <style>
+        body {
+            background-color: black;
+            color: yellow;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 300px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: yellow;
+            color: black;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        #timer {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IBNUTAAEMIYAH Payment</h1>
+    <div>
+        <input type="text" id="accountNumber" placeholder="Account Number" readonly>
+        <button onclick="copyToClipboard('accountNumber')">Copy</button>
+    </div>
+    <div>
+        <input type="text" id="accountName" placeholder="Account Name" readonly>
+        <button onclick="copyToClipboard('accountName')">Copy</button>
+    </div>
+    <div>
+        <input type="text" id="bankName" placeholder="Bank Name" readonly>
+        <button onclick="copyToClipboard('bankName')">Copy</button>
+    </div>
+
+    <div id="timer"></div>
+
+    <p>
+        <a href="edit_account.html">Edit Account Information</a>
+    </p>
+
+    <script>
+        // Load account information from local storage
+        function loadAccountInfo() {
+            document.getElementById('accountNumber').value = localStorage.getItem('accountNumber') || 'Not set';
+            document.getElementById('accountName').value = localStorage.getItem('accountName') || 'Not set';
+            document.getElementById('bankName').value = localStorage.getItem('bankName') || 'Not set';
+        }
+
+        function copyToClipboard(id) {
+            const input = document.getElementById(id);
+            input.select();
+            document.execCommand("copy");
+            alert(`${input.placeholder} copied!`);
+        }
+
+        let timerDuration = 3600; // 1 hour in seconds
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            if (timerDuration > 0) {
+                const minutes = Math.floor(timerDuration / 60);
+                const seconds = timerDuration % 60;
+                timerElement.textContent = `Time until reload: ${minutes}m ${seconds}s`;
+                timerDuration--;
+            } else {
+                clearInterval(timerInterval);
+                alert("Time's up! Please reload the page.");
+                window.location.reload();
+            }
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+        loadAccountInfo(); // Load account info on page load
+    </script>
+</body>
+</html>
+
